@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net472;netstandard2.1</TargetFrameworks>
     <Authors>Johannes Hoppe and many contributors</Authors>
-    <Description>Mongo2Go is a managed wrapper around the latest MongoDB binaries. It targets .NET Standard 2.0.
+    <Description>Mongo2Go is a managed wrapper around the latest MongoDB binaries. It targets .NET Framework 4.7.2 and .NET Standard 2.1.
 This Nuget package contains the executables of mongod, mongoimport and mongoexport v4.4.4 for Windows, Linux and macOS.
 
 
@@ -19,6 +19,24 @@ Mongo2Go has two use cases:
     <PackageProjectUrl>https://github.com/Mongo2Go/Mongo2Go</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/Mongo2Go/Mongo2Go/releases</PackageReleaseNotes>
     <PackageTags>MongoDB Mongo unit test integration runner</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1701;1702;1591;1573</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.1|AnyCPU'">
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>1701;1702;1591;1573</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
+    <NoWarn>1701;1702;1591;1573</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
+    <NoWarn>1701;1702;1591;1573</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Label="Restoring">
@@ -54,7 +72,7 @@ Mongo2Go has two use cases:
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" />
     <PackageReference Include="MinVer" Version="2.5.0" PrivateAssets="all" />
-    <PackageReference Include="MongoDB.Driver" Version="2.12.0" />
+    <PackageReference Include="MongoDB.Driver" Version="3.0.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
   </ItemGroup>
 

@@ -68,7 +68,7 @@ namespace Mongo2Go.Helper
             {
                 standardOutput.Add(args.Data);
 
-                if (!string.IsNullOrEmpty(args.Data) && args.Data.Contains(processReadyIdentifier, StringComparison.OrdinalIgnoreCase))
+                if (!string.IsNullOrEmpty(args.Data) && args.Data.IndexOf(processReadyIdentifier, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     processReady = true;
                 }

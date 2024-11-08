@@ -48,7 +48,7 @@ namespace Mongo2Go.Helper
                 var replicaSetReady = false;
 
                 // subscribe to output from mongod process and check for replica set ready message
-                wrappedProcess.OutputDataReceived += (_, args) => replicaSetReady |= !string.IsNullOrWhiteSpace(args.Data) && args.Data.Contains(ReplicaSetReadyIdentifier, StringComparison.OrdinalIgnoreCase);
+                wrappedProcess.OutputDataReceived += (_, args) => replicaSetReady |= !string.IsNullOrWhiteSpace(args.Data) && args.Data.IndexOf(ReplicaSetReadyIdentifier, StringComparison.OrdinalIgnoreCase) >= 0;
 
                 MongoClient client = new MongoClient("mongodb://127.0.0.1:{0}/?connect=direct;replicaSet={1}".Formatted(port, ReplicaSetName));
                 var admin = client.GetDatabase("admin");
