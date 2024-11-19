@@ -48,16 +48,16 @@ namespace Mongo2Go.Helper
                 var replicaSetReady = false;
 
                 // subscribe to output from mongod process and check for replica set ready message
-                wrappedProcess.OutputDataReceived += (_, args) => replicaSetReady |= !string.IsNullOrWhiteSpace(args.Data) && args.Data.Contains(ReplicaSetReadyIdentifier, StringComparison.OrdinalIgnoreCase);
+                wrappedProcess.OutputDataReceived += (_, args) => replicaSetReady |= !string.IsNullOrWhiteSpace(args.Data) && args.Data.IndexOf(ReplicaSetReadyIdentifier, StringComparison.OrdinalIgnoreCase) >= 0;
 
-                MongoClient client = new MongoClient("mongodb://127.0.0.1:{0}/?connect=direct;replicaSet={1}".Formatted(port, ReplicaSetName));
+                MongoClient client = new MongoClient("mongodb://127.0.0.1:{0}/?directConnection=true&replicaSet={1}".Formatted(port, ReplicaSetName));
                 var admin = client.GetDatabase("admin");
                 var replConfig = new BsonDocument(new List<BsonElement>()
-                {
-                    new BsonElement("_id", ReplicaSetName),
-                    new BsonElement("members",
-                        new BsonArray {new BsonDocument {{"_id", 0}, {"host", "127.0.0.1:{0}".Formatted(port)}}})
-                });
+                    {
+                        new BsonElement("_id", ReplicaSetName),
+                        new BsonElement("members",
+                            new BsonArray {new BsonDocument {{"_id", 0}, {"host", "127.0.0.1:{0}".Formatted(port)}}})
+                    });
                 var command = new BsonDocument("replSetInitiate", replConfig);
                 admin.RunCommand<BsonDocument>(command);
 
