@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net472;netstandard2.1</TargetFrameworks>
     <Authors>Johannes Hoppe and many contributors</Authors>
-    <Description>Mongo2Go is a managed wrapper around the latest MongoDB binaries. It targets .NET Framework 4.7.2 and .NET Standard 2.1.
+    <Description>Mongo2Go is a managed wrapper around MongoDB binaries. It targets .NET Framework 4.7.2 and .NET Standard 2.1.
 This Nuget package contains the executables of mongod, mongoimport and mongoexport v4.4.4 for Windows, Linux and macOS.
 
 
@@ -21,6 +21,8 @@ Mongo2Go has two use cases:
     <PackageTags>MongoDB Mongo unit test integration runner</PackageTags>
     <RepositoryUrl>https://github.com/Mongo2Go/Mongo2Go</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <AssemblyTitle>Mongo2Go</AssemblyTitle>
+    <AssemblyDescription>Mongo2Go is a managed wrapper around MongoDB binaries.</AssemblyDescription>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
@@ -44,7 +46,6 @@ Mongo2Go has two use cases:
   <PropertyGroup Label="Restoring">
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-    <!-- https://devblogs.microsoft.com/nuget/enable-repeatable-package-restores-using-a-lock-file/#how-does-nuget-use-the-lock-file -->
     <RestoreLockedMode Condition="$(ContinuousIntegrationBuild) == 'true'">true</RestoreLockedMode>
   </PropertyGroup>
 
