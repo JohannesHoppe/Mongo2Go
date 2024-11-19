@@ -3,23 +3,22 @@ Mongo2Go - MongoDB for integration tests & local debugging
 
 ![Logo](src/mongo2go_200_200.png)
 
-[![Continuous Integration](https://img.shields.io/github/workflow/status/Mongo2Go/Mongo2Go/Continuous%20Integration?label=Continuous%20Integration&logo=GitHub)](https://github.com/Mongo2Go/Mongo2Go/actions?query=workflow%3A%22Continuous+Integration%22)
 [![NuGet](https://img.shields.io/nuget/v/Mongo2Go.svg?label=NuGet&logo=NuGet)](https://www.nuget.org/packages/Mongo2Go/)
 
 
-Mongo2Go is a managed wrapper around the latest MongoDB binaries.
-It targets **.NET Standard 2.0** (and **.NET 4.6** for legacy environments) and works with Windows, Linux and macOS.
+Mongo2Go is a managed wrapper around MongoDB binaries.
+It targets **.NET Framework 4.7.2** and **.NET Standard 2.1.** and works with Windows, Linux and macOS.
 This Nuget package contains the executables of _mongod_, _mongoimport_ and _mongoexport_ **for Windows, Linux and macOS** .
 
-__Brought to you by [Johannes Hoppe](https://twitter.com/johanneshoppe) and [Cédric Luthi](https://twitter.com/0xced).__ 
+__Brought to you by [Johannes Hoppe](https://twitter.com/johanneshoppe) with the help of many ❤️ contributors!__ 
 
 Mongo2Go has two use cases:
 
-1. Providing multiple, temporary and isolated MongoDB databases for unit tests (or to be precise: integration tests)
+1. Providing multiple, temporary and isolated MongoDB databases for integration tests
 2. Providing a quick to set up MongoDB database for a local developer environment
 
 
-Unit Test / Integration test
+Integration test
 -------------------------------------
 With each call of the static method **MongoDbRunner.Start()** a new MongoDB instance will be set up.
 A free port will be used (starting with port 27018) and a corresponding data directory will be created.
@@ -69,17 +68,10 @@ Search for „Mongo2Go“ in the Manage NuGet Packages dialog box or run:
 
     PM> Install-Package Mongo2Go
 
-or run for the deprecated **.NET Standard 1.6** package:
-
-    PM> Install-Package Mongo2Go -Version 2.2.16
-
-or run for the legacy **.NET 4.6** package:
-
-    PM> Install-Package Mongo2Go -Version 1.1.0
-
 in the Package Manager Console. 
 
-* The new 3.x branch targets __.NET Standard 2.0__. Please use this version if possible. 
+* The new 4.x branch targets __.NET Framework 4.7.2__ and __.NET Standard 2.1__. Please use this version if possible. 
+* The old 3.x branch targets __.NET Standard 2.0__. No new features will be added, only bugfixes might be made.
 * The old 2.x branch targets __.NET Standard 1.6__. No new features will be added, only bugfixes might be made.
 * The old 1.x branch targets good-old classic __.NET 4.6.1__. This is for legacy environments only. No changes will be made.
 
@@ -324,6 +316,20 @@ public class MongoIntegrationTest
 Changelog
 -------------------------------------
 
+### Mongo2Go 4.0.0, November 19 2024
+
+- This is a new major version for Mongo2Go (4.x), driven by:
+  - Dropping support for old .NET Framework versions earlier than 4.7.2 due to updated framework targets.
+  - MongoDB driver switching to strong-named assemblies (see [.NET Driver Version 2.28.0 Release Notes](https://www.mongodb.com/community/forums/t/net-driver-2-28-0-released/289745)).
+- Updated **MongoDB driver to version 3** and re-targeted the project to meet the requirements of the new driver version.
+- Fixed an issue with the single-node replica set option, caused by outdated connection strings that were incompatible with the latest MongoDB driver.
+- Replaced deprecated dependent packages with updated, supported versions, and patched vulnerabilities by upgrading vulnerable dependencies.
+- Please note that the bundled version of MongoDB included with this package has not changed and is still **v4.4**.4. This version of MongoDB is still compatible with the latest version of the driver, so there was no need to update at this time.
+- A big thank you to [DrewM-Hax0r](https://github.com/DrewM-Hax0r) for championing this release! (PR [#153](https://github.com/Mongo2Go/Mongo2Go/pull/153))
+
+<details>
+  <summary><b>Changelog v3.0.0 to 3.1.3</b> (click to show)</summary>
+
 ### Mongo2Go 3.1.3, April 30 2021
 
 * targeting .NET Standard 2.0 instead of 2.1, this makes Mongo2Go compatible with .NET Framework (version 4.7.1 and later) (PR [#118](https://github.com/Mongo2Go/Mongo2Go/pull/118) - many thanks to [Cédric Luthi](https://github.com/0xced))
@@ -346,6 +352,8 @@ Changelog
 
 * adds new MongoDownloader tool (PR [#109](https://github.com/Mongo2Go/Mongo2Go/pull/109), fixes [#82](https://github.com/Mongo2Go/Mongo2Go/issues/82) and [#112](https://github.com/Mongo2Go/Mongo2Go/issues/112) - many thanks to [Cédric Luthi](https://github.com/0xced))
 * adds support for `NUGET_PACKAGES` environment variable (PR [#110](https://github.com/Mongo2Go/Mongo2Go/pull/110) - many thanks to [Bastian Eicher](https://github.com/bastianeicher))
+
+</details>
 
 <details>
   <summary><b>Changelog v2.0.0-alpha1 to v2.2.16</b> (click to show)</summary>
@@ -530,7 +538,6 @@ How to contribute
 -------------------------------------
 
 Just fork the project, make your changes send us a PR.  
-You can compile the project with Visual Studio 2017 and/or the [.NET Core 2.0](https://www.microsoft.com/net/core) CLI!
 
 In the root folder, just run:
 ```

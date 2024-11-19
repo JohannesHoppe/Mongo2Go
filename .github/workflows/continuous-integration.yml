@@ -21,11 +21,11 @@ jobs:
       release-body: ${{ steps.tag-message.outputs.release-notes }}
     steps:
       - name: Checkout git repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Retrieve cached NuGet packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -39,7 +39,7 @@ jobs:
         run: dotnet pack --output . --no-build --verbosity normal
         id: dotnet-pack
       - name: Upload NuGet package artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: matrix.os == 'macos-latest'
         with:
           name: ${{ steps.dotnet-pack.outputs.nupkg-filename }}
@@ -52,7 +52,7 @@ jobs:
           RELEASE_NOTES="${RELEASE_NOTES//'%'/%25}"
           RELEASE_NOTES="${RELEASE_NOTES//$'\n'/%0A}"
           RELEASE_NOTES="${RELEASE_NOTES//$'\r'/%0D}"
-          echo "::set-output name=release-notes::$RELEASE_NOTES"
+          echo "release-notes=$RELEASE_NOTES" >> $GITHUB_OUTPUT
         id: tag-message
   publish:
     runs-on: macos-latest
@@ -61,7 +61,7 @@ jobs:
     name: Publish NuGet package and create GitHub release
     steps:
       - name: Download NuGet package artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ needs.package.outputs.nupkg-filename }}
       - name: Create GitHub Release
