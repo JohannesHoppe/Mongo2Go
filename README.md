@@ -318,6 +318,7 @@ Changelog
 
 ### Mongo2Go 4.0.0, November 19 2024
 
+- A big thank you to [DrewM-Hax0r](https://github.com/DrewM-Hax0r) for championing this release! (PR [#153](https://github.com/Mongo2Go/Mongo2Go/pull/153), fixes [#152](https://github.com/Mongo2Go/Mongo2Go/issues/152))
 - This is a new major version for Mongo2Go (4.x), driven by:
   - Dropping support for old .NET Framework versions earlier than 4.7.2 due to updated framework targets.
   - MongoDB driver switching to strong-named assemblies (see [.NET Driver Version 2.28.0 Release Notes](https://www.mongodb.com/community/forums/t/net-driver-2-28-0-released/289745)).
@@ -325,7 +326,8 @@ Changelog
 - Fixed an issue with the single-node replica set option, caused by outdated connection strings that were incompatible with the latest MongoDB driver.
 - Replaced deprecated dependent packages with updated, supported versions, and patched vulnerabilities by upgrading vulnerable dependencies.
 - Please note that the bundled version of MongoDB included with this package has not changed and is still **v4.4**.4. This version of MongoDB is still compatible with the latest version of the driver, so there was no need to update at this time.
-- A big thank you to [DrewM-Hax0r](https://github.com/DrewM-Hax0r) for championing this release! (PR [#153](https://github.com/Mongo2Go/Mongo2Go/pull/153))
+- **Bugfix:** Corrected binary search path on Linux when `NUGET_PACKAGES` is specified (PR [#140](https://github.com/Mongo2Go/Mongo2Go/pull/140), fixes [#134](https://github.com/Mongo2Go/Mongo2Go/issues/134) - many thanks to [Ove Andersen](https://github.com/azzlack))
+- **Bugfix**: Stops extra empty temporary data being generated (PR [#138](https://github.com/Mongo2Go/Mongo2Go/pull/138), fixes [#136](https://github.com/Mongo2Go/Mongo2Go/issues/136) - many thanks to [Alex Wardle](https://github.com/awardle))
 
 <details>
   <summary><b>Changelog v3.0.0 to 3.1.3</b> (click to show)</summary>
