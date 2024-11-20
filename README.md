@@ -63,12 +63,11 @@ Example of usage of the additional `mongod` arguments: **`MongoDbRunner.Start(ad
 Installation
 --------------
 The Mongo2Go Nuget package can be found at [https://nuget.org/packages/Mongo2Go/](https://nuget.org/packages/Mongo2Go/)
+To install it via the .NET CLI, simply enter:
 
-Search for „Mongo2Go“ in the Manage NuGet Packages dialog box or run:
-
-    PM> Install-Package Mongo2Go
-
-in the Package Manager Console. 
+```sh
+dotnet add package Mongo2Go
+```
 
 * The new 4.x branch targets __.NET Framework 4.7.2__ and __.NET Standard 2.1__. Please use this version if possible. 
 * The old 3.x branch targets __.NET Standard 2.0__. No new features will be added, only bugfixes might be made.
