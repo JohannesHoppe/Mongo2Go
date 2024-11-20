@@ -49,8 +49,10 @@ jobs:
           fetch-depth: 0
       - name: Restore NuGet packages
         run: dotnet restore --locked-mode --verbosity normal
+      - name: Build solution
+        run: dotnet build --configuration ${{ env.Configuration }} --verbosity normal
       - name: Create NuGet package
-        run: dotnet pack --output ./artifacts --configuration ${{ env.Configuration }} --no-build --verbosity normal
+        run: dotnet pack --output ./artifacts --configuration ${{ env.Configuration }} --verbosity normal
       - name: Upload NuGet package artifact
         uses: actions/upload-artifact@v3
         with:
