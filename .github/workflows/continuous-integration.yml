@@ -1,6 +1,11 @@
 name: Continuous Integration
 
-on: push
+on:
+  push:
+    branches:
+      - '**' # Trigger on all branches for commits
+    tags:
+      - 'v*' # Trigger only on version tags for deployments
 
 env:
   Configuration: Release
@@ -9,16 +14,14 @@ env:
   DOTNET_NOLOGO: true
 
 jobs:
-  package:
+  build:
     strategy:
       matrix:
-        os: [ macos-latest, ubuntu-latest, windows-latest ]
+        os: [macos-latest, ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
-    name: Run tests and create NuGet package
-    outputs:
-      version: ${{ steps.dotnet-pack.outputs.version }}
+    name: Build and Test
     steps:
-      - name: Checkout git repository
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -33,36 +36,34 @@ jobs:
         run: dotnet build --configuration ${{ env.Configuration }} --verbosity normal
       - name: Run tests
         run: dotnet test --configuration ${{ env.Configuration }} --no-build --verbosity normal
+
+  publish:
+    runs-on: macos-latest
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    name: Deploy NuGet and GitHub Release
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Create NuGet package
         run: dotnet pack --output ./artifacts --configuration ${{ env.Configuration }} --no-build --verbosity normal
-        id: dotnet-pack
-      - name: Debug package output
-        run: ls -R ./artifacts
       - name: Upload NuGet package artifact
         uses: actions/upload-artifact@v3
         with:
-          name: nupkg-artifacts-${{ matrix.os }}
+          name: mongo2go-nuget-package
           path: ./artifacts/*.nupkg
-  publish:
-    runs-on: macos-latest
-    needs: package
-    if: startsWith(github.ref, 'refs/tags/')
-    name: Publish NuGet package and create GitHub release
-    steps:
-      - name: Download NuGet package artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: nupkg-artifacts-macos-latest
+      - name: Publish NuGet package
+        run: dotnet nuget push ./artifacts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key "${{ secrets.NUGET_API_KEY }}"
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ needs.package.outputs.version }}
-          release_name: Version ${{ needs.package.outputs.version }}
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
           body: |
-            Release version ${{ needs.package.outputs.version }}. Automatically generated.
-          draft: false
-          prerelease: ${{ contains(needs.package.outputs.version, '-') }}
-      - name: Publish NuGet package on nuget.org
-        run: dotnet nuget push ./artifacts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key "${{ secrets.NUGET_API_KEY }}"
+            A new release is ready for review.
+          draft: true
+          prerelease: ${{ contains(github.ref_name, '-') }}
