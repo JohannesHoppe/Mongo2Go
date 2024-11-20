@@ -31,7 +31,7 @@ jobs:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
       - name: Restore NuGet packages
-        run: dotnet restore --verbosity normal
+        run: dotnet restore --locked-mode --verbosity normal
       - name: Build solution
         run: dotnet build --configuration ${{ env.Configuration }} --verbosity normal
       - name: Run tests
@@ -47,6 +47,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: Restore NuGet packages
+        run: dotnet restore --locked-mode --verbosity normal
       - name: Create NuGet package
         run: dotnet pack --output ./artifacts --configuration ${{ env.Configuration }} --no-build --verbosity normal
       - name: Upload NuGet package artifact
@@ -62,7 +64,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref_name }}
-          release_name: ${{ github.ref_name }}
+          release_name: Version ${{ github.ref_name }}
           body: |
             A new release is ready for review.
           draft: true
