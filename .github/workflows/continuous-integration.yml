@@ -22,11 +22,11 @@ jobs:
     name: Build and Test
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Retrieve cached NuGet packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -61,13 +61,10 @@ jobs:
       - name: Publish NuGet package
         run: dotnet nuget push ./artifacts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate
       - name: Create GitHub Release
-        uses: actions/create-release@v1
+        run: |
+          gh release create ${{ github.ref_name }} ./artifacts/*.nupkg \
+            --title "${{ github.ref_name }}" \
+            --notes "A new release has been created. Please update the release notes manually with details about changes and improvements." \
+            --draft
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref_name }}
-          release_name: Version ${{ github.ref_name }}
-          body: |
-            A new release is ready for review.
-          draft: true
-          prerelease: ${{ contains(github.ref_name, '-') }}
