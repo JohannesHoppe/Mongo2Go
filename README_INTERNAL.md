@@ -19,9 +19,10 @@ This process involves two steps to ensure reliable deployments.
    - Ensure that the GitHub Actions workflow completes successfully. This confirms your changes are valid.
 
 3. **Tag the Commit**
-   - Once the CI build passes, create a lightweight tag with the desired version number:
+   - Once the CI build passes, create a lightweight tag with the desired version number
+   - Use an **annotated tag** to ensure the release is properly versioned and auditable (`-a` flag):
      ```bash
-     git tag v4.0.0
+     git tag -a v4.0.0
      ```
    - Push the tag to trigger the deployment workflow:
      ```bash
