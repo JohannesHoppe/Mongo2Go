@@ -38,6 +38,8 @@ jobs:
       - name: Create NuGet package
         run: dotnet pack --output . --no-build --verbosity normal
         id: dotnet-pack
+      - name: Debug package location
+        run: ls -R src/Mongo2Go/bin/Release
       - name: Upload NuGet package artifact
         uses: actions/upload-artifact@v3
         if: matrix.os == 'macos-latest'

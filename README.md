@@ -325,7 +325,7 @@ Changelog
 - Updated **MongoDB driver to version 3** and re-targeted the project to meet the requirements of the new driver version.
 - Fixed an issue with the single-node replica set option, caused by outdated connection strings that were incompatible with the latest MongoDB driver.
 - Replaced deprecated dependent packages with updated, supported versions, and patched vulnerabilities by upgrading vulnerable dependencies.
-- Please note that the bundled version of MongoDB included with this package has not changed and is still **v4.4**.4. This version of MongoDB is still compatible with the latest version of the driver, so there was no need to update at this time.
+- Please note that the bundled version of MongoDB included with this package has not changed and is still **v4.4.4**. This version of MongoDB is still compatible with the latest version of the driver, so there was no need to update at this time.
 - **Bugfix:** Corrected binary search path on Linux when `NUGET_PACKAGES` is specified (PR [#140](https://github.com/Mongo2Go/Mongo2Go/pull/140), fixes [#134](https://github.com/Mongo2Go/Mongo2Go/issues/134) - many thanks to [Ove Andersen](https://github.com/azzlack))
 - **Bugfix**: Stops extra empty temporary data being generated (PR [#138](https://github.com/Mongo2Go/Mongo2Go/pull/138), fixes [#136](https://github.com/Mongo2Go/Mongo2Go/issues/136) - many thanks to [Alex Wardle](https://github.com/awardle))
 
