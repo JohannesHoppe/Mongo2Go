@@ -315,6 +315,23 @@ public class MongoIntegrationTest
 Changelog
 -------------------------------------
 
+### Mongo2Go 4.1.0, January 30 2025  
+
+- Updated **MongoDB.Driver** to version **3.1.0**, ensuring compatibility with the latest MongoDB client features (PR [#156](https://github.com/Mongo2Go/Mongo2Go/pull/156), fixes [#154](https://github.com/Mongo2Go/Mongo2Go/issues/154) - many thanks to [Teneko](https://github.com/teneko))  
+- Please note that the bundled version of MongoDB included with this package remains **v4.4.4**. 
+- **Note for Ubuntu users**: MongoDB 4.4.4 requires **libcrypto.so.1.1**, which is no longer included in Ubuntu 22.04 and newer. If you encounter an error like:  
+  ```
+  error while loading shared libraries: libcrypto.so.1.1: cannot open shared object file: No such file or directory
+  ```
+  You can fix this by installing OpenSSL 1.1 manually:  
+  ```bash
+  echo "deb http://security.ubuntu.com/ubuntu focal-security main" | sudo tee /etc/apt/sources.list.d/focal-security.list
+  sudo apt update
+  sudo apt install -y libssl1.1
+  ```
+  This restores `libcrypto.so.1.1` and allows Mongo2Go/MongoDB to run properly.  
+
+
 ### Mongo2Go 4.0.0, November 19 2024
 
 - A big thank you to [DrewM-Hax0r](https://github.com/DrewM-Hax0r) for championing this release! (PR [#153](https://github.com/Mongo2Go/Mongo2Go/pull/153), fixes [#152](https://github.com/Mongo2Go/Mongo2Go/issues/152))
