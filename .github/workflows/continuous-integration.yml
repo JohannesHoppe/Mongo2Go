@@ -24,8 +24,8 @@ jobs:
       - name: Install OpenSSL 1.1 (restores libcrypto.so.1.1 which is required by MongoDB binaries v4.4.4)
         if: runner.os == 'Linux'
         run: |
-          sudo apt update
-          sudo apt install -y libssl1.1
+          wget http://security.ubuntu.com/ubuntu/pool/main/o/openssl1.1/libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
+          sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
