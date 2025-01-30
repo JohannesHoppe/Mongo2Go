@@ -21,6 +21,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: Build and Test
     steps:
+      - name: Install OpenSSL 1.1 (restores libcrypto.so.1.1 which is required by MongoDB binaries v4.4.4)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt update
+          sudo apt install -y libssl1.1
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
